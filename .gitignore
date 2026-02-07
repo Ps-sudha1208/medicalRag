@@ -11,3 +11,19 @@ __pycache__/
 *.pyc
 .venv/
 .env
+# data / large artifacts
+Data/synthetic_dataset/
+Data/rag_artifacts/
+results/
+
+# python
+__pycache__/
+*.pyc
+.venv/
+.env
+
+# models / vector db
+*.joblib
+*.bin
+*.faiss
+*.pkl

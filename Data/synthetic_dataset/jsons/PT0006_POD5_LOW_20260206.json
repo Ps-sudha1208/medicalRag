@@ -1,0 +1,52 @@
+{
+  "patient_profile": {
+    "patient_id": "PT0006",
+    "name": "Zashil Raja",
+    "age": 48,
+    "sex": "F",
+    "comorbidities": [
+      "Hypertension"
+    ],
+    "surgery": "Whipple Procedure (Pancreaticoduodenectomy)",
+    "surgery_complexity": "low",
+    "surgeon": "Dr. Aggarwal",
+    "schedule_type": "gapped_30",
+    "pods": [
+      0,
+      1,
+      3,
+      5,
+      7,
+      14,
+      21,
+      30
+    ]
+  },
+  "daily_observation": {
+    "pod": 5,
+    "timestamp": "2026-02-07T07:30:00",
+    "temperature": 36.7,
+    "heart_rate": 72,
+    "blood_pressure": "117/78",
+    "respiratory_rate": 15,
+    "spo2": 97,
+    "pain_score": 8,
+    "wbc": 6.8,
+    "hemoglobin": 13.0,
+    "wound_status": "Clean, dry, intact",
+    "drainage": "None",
+    "clinical_notes": "Mild pain, improving mobility. No concerning symptoms.",
+    "injected_events": [],
+    "rule_risk_score": 15,
+    "rule_risk_level": "LOW"
+  },
+  "planned_events": [],
+  "ground_truth": {
+    "risk_level_rule": "LOW",
+    "risk_score_rule": 15,
+    "schedule_type": "gapped_30",
+    "has_complication": false,
+    "complications_active": [],
+    "complications_started_today": []
+  }
+}

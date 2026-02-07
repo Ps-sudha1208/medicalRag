@@ -1,0 +1,52 @@
+{
+  "patient_profile": {
+    "patient_id": "PT0020",
+    "name": "Harshil Brar",
+    "age": 41,
+    "sex": "M",
+    "comorbidities": [
+      "None"
+    ],
+    "surgery": "Total Hip Arthroplasty",
+    "surgery_complexity": "low",
+    "surgeon": "Dr. Bala",
+    "schedule_type": "gapped_30",
+    "pods": [
+      0,
+      1,
+      3,
+      5,
+      7,
+      14,
+      21,
+      30
+    ]
+  },
+  "daily_observation": {
+    "pod": 7,
+    "timestamp": "2026-02-09T06:00:00",
+    "temperature": 37.5,
+    "heart_rate": 80,
+    "blood_pressure": "103/66",
+    "respiratory_rate": 15,
+    "spo2": 96,
+    "pain_score": 2,
+    "wbc": 9.1,
+    "hemoglobin": 11.5,
+    "wound_status": "Clean, dry, intact",
+    "drainage": "None",
+    "clinical_notes": "Mild pain, improving mobility. No concerning symptoms.",
+    "injected_events": [],
+    "rule_risk_score": 0,
+    "rule_risk_level": "LOW"
+  },
+  "planned_events": [],
+  "ground_truth": {
+    "risk_level_rule": "LOW",
+    "risk_score_rule": 0,
+    "schedule_type": "gapped_30",
+    "has_complication": false,
+    "complications_active": [],
+    "complications_started_today": []
+  }
+}

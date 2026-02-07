@@ -1,0 +1,27 @@
+{
+  "dataset_root": "/nuvodata/User_data/priti/medicalRAG/Data/synthetic_dataset",
+  "pdf_dir": "/nuvodata/User_data/priti/medicalRAG/Data/synthetic_dataset/pdfs",
+  "json_dir": "/nuvodata/User_data/priti/medicalRAG/Data/synthetic_dataset/jsons",
+  "rag_artifacts_root": "/nuvodata/User_data/priti/medicalRAG/Data/rag_artifacts",
+  "vectordb_backend": "faiss",
+  "embedding_preset": "minilm",
+  "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "embedding_dim": 384,
+  "vectordb_dir": "/nuvodata/User_data/priti/medicalRAG/Data/rag_artifacts/vectordb_faiss_minilm_384",
+  "pdf_count": 380,
+  "json_count": 380,
+  "total_records": 405,
+  "records_with_ground_truth": 405,
+  "patient_id_and_pod_exact_match_count": 380,
+  "field_mae": {
+    "temperature": 0.0,
+    "heart_rate": 0.0,
+    "spo2": 0.0,
+    "wbc": 0.0,
+    "hemoglobin": 0.0,
+    "pain_score": 0.0,
+    "pod": 0.0
+  },
+  "validation_error_rate": 0.0,
+  "avg_completeness_score": 0.9382716049382716
+}

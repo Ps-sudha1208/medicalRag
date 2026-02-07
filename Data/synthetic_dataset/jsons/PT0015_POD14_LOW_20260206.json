@@ -1,0 +1,66 @@
+{
+  "patient_profile": {
+    "patient_id": "PT0015",
+    "name": "Yamini Jayaraman",
+    "age": 71,
+    "sex": "M",
+    "comorbidities": [
+      "Coronary artery disease",
+      "Diabetes mellitus"
+    ],
+    "surgery": "Hernia Repair (Inguinal)",
+    "surgery_complexity": "low",
+    "surgeon": "Dr. Dayal",
+    "schedule_type": "gapped_30",
+    "pods": [
+      0,
+      1,
+      3,
+      5,
+      7,
+      14,
+      21,
+      30
+    ]
+  },
+  "daily_observation": {
+    "pod": 14,
+    "timestamp": "2026-02-16T06:30:00",
+    "temperature": 37.5,
+    "heart_rate": 85,
+    "blood_pressure": "140/90",
+    "respiratory_rate": 17,
+    "spo2": 100,
+    "pain_score": 4,
+    "wbc": 11.3,
+    "hemoglobin": 13.8,
+    "wound_status": "Increasing redness",
+    "drainage": "Seropurulent",
+    "clinical_notes": "Concern for SSI; wound erythematous with drainage. BGL elevated; insulin sliding scale.",
+    "injected_events": [],
+    "rule_risk_score": 10,
+    "rule_risk_level": "LOW"
+  },
+  "planned_events": [
+    [
+      "Wound dehiscence",
+      15,
+      "HIGH"
+    ],
+    [
+      "Surgical site infection",
+      4,
+      "MED"
+    ]
+  ],
+  "ground_truth": {
+    "risk_level_rule": "LOW",
+    "risk_score_rule": 10,
+    "schedule_type": "gapped_30",
+    "has_complication": true,
+    "complications_active": [
+      "Surgical site infection"
+    ],
+    "complications_started_today": []
+  }
+}

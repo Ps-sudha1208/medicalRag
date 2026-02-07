@@ -1,0 +1,52 @@
+{
+  "patient_profile": {
+    "patient_id": "PT0005",
+    "name": "Indrajit Sibal",
+    "age": 28,
+    "sex": "F",
+    "comorbidities": [
+      "CKD stage 3",
+      "Hypertension",
+      "Diabetes mellitus"
+    ],
+    "surgery": "CABG (Coronary Artery Bypass Graft)",
+    "surgery_complexity": "high",
+    "surgeon": "Dr. Mani",
+    "schedule_type": "dense_early_0_5",
+    "pods": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  },
+  "daily_observation": {
+    "pod": 2,
+    "timestamp": "2026-02-07T10:15:00",
+    "temperature": 37.3,
+    "heart_rate": 71,
+    "blood_pressure": "124/86",
+    "respiratory_rate": 18,
+    "spo2": 97,
+    "pain_score": 6,
+    "wbc": 8.3,
+    "hemoglobin": 11.5,
+    "wound_status": "Clean, dry, intact",
+    "drainage": "None",
+    "clinical_notes": "Recovering as expected. Pain controlled. No acute distress.",
+    "injected_events": [],
+    "rule_risk_score": 5,
+    "rule_risk_level": "LOW"
+  },
+  "planned_events": [],
+  "ground_truth": {
+    "risk_level_rule": "LOW",
+    "risk_score_rule": 5,
+    "schedule_type": "dense_early_0_5",
+    "has_complication": false,
+    "complications_active": [],
+    "complications_started_today": []
+  }
+}

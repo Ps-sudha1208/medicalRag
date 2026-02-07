@@ -1,0 +1,60 @@
+{
+  "patient_profile": {
+    "patient_id": "PT0010",
+    "name": "Lekha Raja",
+    "age": 79,
+    "sex": "M",
+    "comorbidities": [
+      "Obesity"
+    ],
+    "surgery": "Total Hip Arthroplasty",
+    "surgery_complexity": "moderate",
+    "surgeon": "Dr. Sarraf",
+    "schedule_type": "gapped_30",
+    "pods": [
+      0,
+      1,
+      3,
+      5,
+      7,
+      14,
+      21,
+      30
+    ]
+  },
+  "daily_observation": {
+    "pod": 30,
+    "timestamp": "2026-03-05T08:30:00",
+    "temperature": 37.7,
+    "heart_rate": 56,
+    "blood_pressure": "145/74",
+    "respiratory_rate": 14,
+    "spo2": 93,
+    "pain_score": 0,
+    "wbc": 8.7,
+    "hemoglobin": 10.8,
+    "wound_status": "Clean, dry, intact",
+    "drainage": "None",
+    "clinical_notes": "Productive cough, crackles on auscultation; consider pneumonia.",
+    "injected_events": [],
+    "rule_risk_score": 15,
+    "rule_risk_level": "LOW"
+  },
+  "planned_events": [
+    [
+      "Pneumonia",
+      6,
+      "MED"
+    ]
+  ],
+  "ground_truth": {
+    "risk_level_rule": "LOW",
+    "risk_score_rule": 15,
+    "schedule_type": "gapped_30",
+    "has_complication": true,
+    "complications_active": [
+      "Pneumonia"
+    ],
+    "complications_started_today": []
+  }
+}

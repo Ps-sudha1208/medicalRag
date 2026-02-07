@@ -1,0 +1,83 @@
+{
+  "patient_profile": {
+    "patient_id": "PT0001",
+    "name": "Upadhriti Menon",
+    "age": 52,
+    "sex": "F",
+    "comorbidities": [
+      "COPD",
+      "Diabetes mellitus",
+      "Obesity"
+    ],
+    "surgery": "Laparoscopic Cholecystectomy",
+    "surgery_complexity": "moderate",
+    "surgeon": "Dr. Sharma",
+    "schedule_type": "dense_daily_30",
+    "pods": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30
+    ]
+  },
+  "daily_observation": {
+    "pod": 4,
+    "timestamp": "2026-02-09T09:45:00",
+    "temperature": 36.8,
+    "heart_rate": 107,
+    "blood_pressure": "84/85",
+    "respiratory_rate": 17,
+    "spo2": 95,
+    "pain_score": 5,
+    "wbc": 9.3,
+    "hemoglobin": 13.9,
+    "wound_status": "Clean, dry, intact",
+    "drainage": "None",
+    "clinical_notes": "BGL elevated; insulin sliding scale.",
+    "injected_events": [],
+    "rule_risk_score": 40,
+    "rule_risk_level": "MEDIUM"
+  },
+  "planned_events": [
+    [
+      "Wound dehiscence",
+      10,
+      "HIGH"
+    ]
+  ],
+  "ground_truth": {
+    "risk_level_rule": "MEDIUM",
+    "risk_score_rule": 40,
+    "schedule_type": "dense_daily_30",
+    "has_complication": false,
+    "complications_active": [],
+    "complications_started_today": []
+  }
+}

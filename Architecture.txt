@@ -1,0 +1,436 @@
+Input:
+
+Post-operative text data (from PDFs)
+
+Output:
+
+Risk-stratified assessment with automated alerts
+
+Core technology:
+
+LangGraph multi-agent orchestration with 4-tier risk routing
+
+6 AGENTS:
+
+    AGENT 1: Document Parser Agent
+Role: Extract structured clinical features from unstructured text
+Responsibilities:
+
+Parse vital signs (Temperature, HR, BP, RR, SpO2, Pain)
+Extract laboratory values (WBC, Hemoglobin, Platelets, Creatinine)
+Identify wound status and drainage information
+Extract temporal data (POD, surgery date, procedure type)
+Handle multiple document formats
+
+Tools:
+
+Regex patterns for structured extraction
+spaCy for entity recognition
+Custom medical NER models
+Fallback: Free LLM (Mistral-7B via Ollama) for ambiguous text
+
+Input: Raw text from post-op document
+Output: Structured extracted_features dictionary
+Failure Modes & Fallbacks:
+
+Regex fails → Use spaCy NER
+NER fails → Use LLM extraction
+LLM fails → Flag for manual review
+
+    AGENT 2: Feature Validator Agent
+Role: Ensure data quality and completeness
+Responsibilities:
+
+Validate physiological plausibility of values (e.g., temp 35-42°C)
+Check for required fields (patient ID, surgery type, POD)
+Detect outliers and impossible values
+Flag missing critical data
+Ensure internal consistency (dates, units)
+
+Input: extracted_features from Agent 1
+Output: validated_features + validation status
+Failure Modes & Fallbacks:
+
+Missing data → Request from user or use previous value
+Invalid value → Flag for review, use safe default
+Inconsistent data → Alert and proceed with caution flag
+
+    AGENT 3: Historical Retrieval Agent
+Role: Retrieve relevant context from vector database and knowledge base
+Responsibilities:
+
+Query FAISS vector database for patient history
+Retrieve similar post-op cases (same surgery type + POD)
+Fetch clinical guidelines (ERAS protocols)
+Get surgery-specific complication patterns
+Retrieve previous assessments for trend analysis
+
+Input: validated_features + patient_id
+Output: retrieved_context (historical data, similar cases, guidelines)
+Failure Modes & Fallbacks:
+
+No patient history → Proceed without (flag as new patient)
+No similar cases → Broaden search to surgery category
+Vector DB down → Use cached guidelines only
+Empty results → Continue with reduced context (log warning)
+
+    AGENT 4: Temporal Analyzer Agent
+Role: Analyze trends and progression over time
+Responsibilities:
+
+Calculate vital sign trends (improving/stable/worsening)
+Compare current values to POD-specific expected ranges
+Identify concerning patterns (e.g., rising WBC over 3 days)
+Detect rapid deterioration (significant changes in <24hrs)
+Generate progression summary
+
+Temporal Features Generated:
+
+Temperature trend (last 3 days)
+Heart rate variability
+Pain trajectory
+WBC progression
+Overall recovery pace vs expected
+
+Input: validated_features + retrieved_context (historical)
+Output: temporal_analysis dictionary with trends
+Failure Modes & Fallbacks:
+
+Insufficient history → Use single-point assessment only
+Irregular timestamps → Use available data with warning
+Missing intermediate values → Interpolate or skip
+
+    AGENT 5: Risk Assessor Agent CRITICAL AGENT
+Role: Multi-layered risk assessment and stratification
+Three-Layer Assessment:
+Layer 1: Rule-Based Assessment
+Hard-coded clinical criteria and red flags
+
+Layer 2: ML-Based Risk Scoring
+Trained Random Forest model on historical outcomes
+
+Layer 3: LLM Contextual Assessment
+Using free Mistral-7B for nuanced interpretation
+
+Input: validated_features + retrieved_context + temporal_analysis
+Output: risk_assessment (level, score, factors, reasoning)
+Failure Modes & Fallbacks:
+
+ML model fails → Use rule + LLM only
+LLM fails → Use rule + ML only
+Both fail → Use rules only (most conservative)
+All fail → Default to MEDIUM risk + alert admin
+
+Metrics Tracked: Sensitivity, Precision, Accuracy
+
+    AGENT 6: Response Generator Agent
+Role: Generate context-aware clinical assessment and recommendations
+Responsibilities:
+
+Generate natural language clinical summary
+Create actionable recommendations
+Cite relevant sources from retrieved context
+Format response based on risk level
+Include disclaimers and warnings
+
+RAG Pipeline: Retrieved Context → Prompt Construction → LLM Generation → 
+              Post-processing → Citation Addition → Formatting
+
+Get Risk-specific Response templates
+Generate response using LLM Prompt
+
+Input: All previous agent outputs + risk assessment
+Output: Formatted clinical assessment text
+Failure Modes & Fallbacks:
+
+LLM generation fails → Use template-based response
+Low quality response → Regenerate with better prompt
+Missing context → Generate with available data + warning
+
+-------------------------------------------------------------------------------------
+
+FAISS + MiniLM is ideal:
+1.  Fastest rebuild
+2.  Small embeddings (384-dim)
+3.  No dimension mismatch headaches
+4.  Very stable on CPU
+5.  Perfect for demos + iteration + explanation in interviews
+
+PDF → Chunk → embed → index → retrieve → show sources/snippets
+
+I have now:
+1.  Synthetic PDFs + JSON ground truth
+2.  FAISS + MiniLM ector index built
+3.  Retrieval working (query  → sources/snippets) 
+
+-------------------------------------------------------------
+
+Flowchart till now:
+                     ┌─────────────────────────────────────────┐
+                     │                INPUT                     │
+                     │   Post-op PDF(s)  →  PyPDFLoader text     │
+                     └─────────────────────────────────────────┘
+                                      │
+                                      v
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ AGENT 1: PARSER (Regex extraction via LangChain Tool)                         │
+│  - Extract: patient_id, POD, procedure, vitals, labs, notes, red_flags        │
+└─────────────────────────────────────────────────────────────────────────────┘
+          │
+          │  (Fallback: regex miss → value becomes None; continue)
+          v
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ AGENT 2: VALIDATOR (Ranges + required fields)                                 │
+│  - status: ok / warn / error                                                  │
+│  - warnings: missing_required:*                                               │
+│  - errors: out_of_range / invalid_type                                        │
+└─────────────────────────────────────────────────────────────────────────────┘
+          │
+          │  (Fallback: even if warn/error → continue; flags saved in state)
+          v
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ AGENT 3: RETRIEVAL (FAISS + MiniLM embeddings)                                │
+│  - craft query from validated_features                                        │
+│  - retrieve top_k similar chunks                                              │
+│  - output: contexts + citations                                               │
+└─────────────────────────────────────────────────────────────────────────────┘
+          │
+          │  Fallbacks:
+          │   ├─ FAISS dir missing  → empty contexts + warning
+          │   ├─ embeddings error   → empty contexts + error logged
+          │   └─ no docs retrieved  → empty contexts
+          v
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ AGENT 4: TEMPORAL ANALYZER (JSON lookback history)                            │
+│  - load last 3 POD JSONs for same patient                                     │
+│  - compute trends: temp/hr/wbc/spo2                                           │
+└─────────────────────────────────────────────────────────────────────────────┘
+          │
+          │  Fallbacks:
+          │   ├─ missing patient_id/POD → status=warn; skip trends
+          │   ├─ no history available   → single-point / insufficient_history
+          │   └─ partial history        → use available points
+          v
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ AGENT 5: RISK ASSESSOR (3-layer; conservative escalation)                     │
+│  Layer 1: Rule-based score ALWAYS runs                                        │
+│  Layer 2: ML RandomForest (if model exists)                                   │
+│  Layer 3: Ollama reasoning (if enabled + server alive)                        │
+│  Output: risk_level + risk_score + factors + alerts                           │
+└─────────────────────────────────────────────────────────────────────────────┘
+          │
+          │  Fallbacks:
+          │   ├─ ML missing/fails   → rules only (continue)
+          │   ├─ Ollama fails       → rules/ML only (continue)
+          │   ├─ everything fails   → default MEDIUM + admin alert
+          │   └─ ML > rule tier     → escalate (never downgrade)
+          v
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 4-TIER ROUTING (LangGraph conditional edges)                                  │
+│     if risk_level == LOW      → respond_low                                  │
+│     if risk_level == MEDIUM   → respond_medium                               │
+│     if risk_level == HIGH     → respond_high                                 │
+│     if risk_level == CRITICAL → respond_critical                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+          │
+          v
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ AGENT 6: RESPONSE GENERATOR (Template + optional Ollama polish)               │
+│  - prints summary + trends + factors + recommendations                         │
+│  - adds citations if retrieval worked                                          │
+└─────────────────────────────────────────────────────────────────────────────┘
+          │
+          │  Fallbacks:
+          │   ├─ Ollama polish fails → template output
+          │   ├─ citations empty     → omit citations section
+          │   └─ missing fields      → still prints safely
+          v
+                     ┌─────────────────────────────────────────┐
+                     │               OUTPUT                    │
+                     │ Risk-stratified assessment + alerts     │
+                     │ + (optional) citations + trace/errors   │
+                     └─────────────────────────────────────────┘
+
+Ideal Target Flowchart(Current vs Planned):
+                                   ┌─────────────────────────────┐
+                                   │            INPUT            │
+                                   │   PDF(s) → PyPDFLoader text  │
+                                   └─────────────────────────────┘
+                                                  │
+                                                  v
+┌──────────────────────────────────────────────────────────────────────────────────┐
+│ AGENT 1: PARSER                                                                   │
+│ CURRENT: Regex extraction only                                                     │
+│ TARGET : Regex → (if low extraction quality) spaCy NER → (if still ambiguous) LLM │
+│ OUTPUT : extracted_features                                                        │
+└──────────────────────────────────────────────────────────────────────────────────┘
+            │
+            │  TARGET fallback routing inside agent:
+            │   - if too many None/missing fields → spaCy
+            │   - if key fields still missing → Ollama extraction
+            │   - if still failing → manual_review flag
+            v
+┌──────────────────────────────────────────────────────────────────────────────────┐
+│ AGENT 2: VALIDATOR                                                                │
+│ CURRENT: Range checks + required fields warnings/errors                           │
+│ TARGET : Also unit normalization + consistency checks + backfill from history     │
+│ OUTPUT : validated_features + validation status                                   │
+└──────────────────────────────────────────────────────────────────────────────────┘
+            │
+            │ TARGET fallbacks:
+            │  - missing field → backfill from last known patient value (if allowed)
+            │  - invalid value → safe default + "needs_review" flag
+            v
+┌──────────────────────────────────────────────────────────────────────────────────┐
+│ AGENT 3: RETRIEVAL                                                                │
+│ CURRENT: FAISS+MiniLM similar-case retrieval only                                 │
+│ TARGET : Patient history + similar cases + guideline retrieval (ERAS etc.)         │
+│ OUTPUT : retrieved_context (history, similar, guidelines)                          │
+└──────────────────────────────────────────────────────────────────────────────────┘
+            │
+            │ TARGET fallbacks:
+            │  - no patient history → still do similar-case + guidelines
+            │  - no similar cases → broaden query (surgery category)
+            │  - faiss down → cached guideline store (static)
+            v
+┌──────────────────────────────────────────────────────────────────────────────────┐
+│ AGENT 4: TEMPORAL ANALYZER                                                        │
+│ CURRENT: reads JSON lookback (last 3 PODs) → trends                               │
+│ TARGET : also compare to POD-expected ranges + detect rapid deterioration          │
+│ OUTPUT : temporal_analysis                                                         │
+└──────────────────────────────────────────────────────────────────────────────────┘
+            │
+            │ TARGET fallbacks:
+            │  - insufficient history → single-point only + warn
+            │  - irregular timestamps → best-effort + warn
+            v
+┌──────────────────────────────────────────────────────────────────────────────────┐
+│ AGENT 5: RISK ASSESSOR (CRITICAL)                                                  │
+│ CURRENT: Rules + optional RF + optional Ollama reasoning                           │
+│ TARGET : Track metrics + calibration + conservative escalation                     │
+│ OUTPUT : risk_assessment {tier, score, factors, reasoning, alerts}                 │
+└──────────────────────────────────────────────────────────────────────────────────┘
+            │
+            │ TARGET fallbacks:
+            │  - ML fails → rules + LLM
+            │  - LLM fails → rules + ML
+            │  - both fail → rules only
+            │  - all fail → MEDIUM + admin alert (very conservative)
+            v
+┌──────────────────────────────────────────────────────────────────────────────────┐
+│ 4-TIER ROUTING (LangGraph conditional edges)                                       │
+│ LOW → respond_low | MEDIUM → respond_medium | HIGH → respond_high | CRITICAL → ... │
+└──────────────────────────────────────────────────────────────────────────────────┘
+            │
+            v
+┌──────────────────────────────────────────────────────────────────────────────────┐
+│ AGENT 6: RESPONSE GENERATOR                                                       │
+│ CURRENT: template + optional Ollama polish                                         │
+│ TARGET : RAG-grounded response + citations + safety disclaimers + structured output│
+│ OUTPUT : final_response                                                            │
+└──────────────────────────────────────────────────────────────────────────────────┘
+
+current Flowchart:
+INPUT PDF
+  |
+  v
+PDF → raw_text
+  |
+  v
+PARSER (Agent 1)
+  |
+  ├─ Regex extraction
+  |     |
+  |     ├─ Quality ≥ 70%  → ACCEPT
+  |     |
+  |     └─ Quality < 70%
+  |           |
+  |           v
+  |     spaCy extraction (local)
+  |           |
+  |           ├─ spaCy not installed / model missing
+  |           |     → continue with regex-only
+  |           |
+  |           ├─ Merge missing fields
+  |           |
+  |           └─ Recompute quality
+  |                 |
+  |                 ├─ Quality ≥ 70% → ACCEPT
+  |                 |
+  |                 └─ Quality < 70%
+  |                       |
+  |                       v
+  |                 Ollama extraction (optional)
+  |                       |
+  |                       ├─ Ollama down / bad JSON
+  |                       |     → ignore Ollama output
+  |                       |
+  |                       ├─ Merge missing fields
+  |                       |
+  |                       └─ Recompute quality
+  |                             |
+  |                             └─ Still < 70%
+  |                                   → FLAG manual_review_recommended
+  |
+  v
+VALIDATOR (Agent 2)
+  |
+  ├─ Missing required fields
+  |     → WARN (pipeline continues)
+  |
+  ├─ Out-of-range / invalid values
+  |     → ERROR logged (pipeline continues)
+  |
+  v
+RETRIEVAL (Agent 3)
+  |
+  ├─ Patient history JSONs missing
+  |     → patient_history = []
+  |
+  ├─ FAISS cases index missing
+  |     → warning + no similar cases
+  |
+  ├─ FAISS guidelines index missing
+  |     → warning + no guidelines
+  |
+  v
+TEMPORAL ANALYSIS (Agent 4)
+  |
+  ├─ Missing patient_id or POD
+  |     → warn + minimal temporal output
+  |
+  ├─ No history points
+  |     → trends = insufficient_history
+  |
+  v
+RISK ASSESSMENT (Agent 5)
+  |
+  ├─ ML model missing / load fails
+  |     → SKIP ML, rules only
+  |
+  ├─ Ollama disabled / fails
+  |     → no LLM reasoning
+  |
+  ├─ Rapid deterioration detected
+  |     → FORCE score escalation
+  |
+  ├─ Expected-range violations
+  |     → ADD penalty points
+  |
+  ├─ Risk engine crashes
+  |     → DEFAULT MEDIUM + alert
+  |
+  v
+ROUTER
+  |
+  ├─ Unknown / invalid risk level
+  |     → MEDIUM path
+  |
+  v
+RESPONSE GENERATION (Agent 6)
+  |
+  ├─ Ollama rewrite fails
+  |     → return template response
+  |
+  └─ Citations missing
+        → response still generated

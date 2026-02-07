@@ -1,0 +1,66 @@
+{
+  "patient_profile": {
+    "patient_id": "PT0017",
+    "name": "Amrita Korpal",
+    "age": 51,
+    "sex": "F",
+    "comorbidities": [
+      "Obesity"
+    ],
+    "surgery": "Appendectomy",
+    "surgery_complexity": "low",
+    "surgeon": "Dr. Sem",
+    "schedule_type": "gapped_30",
+    "pods": [
+      0,
+      1,
+      3,
+      5,
+      7,
+      14,
+      21,
+      30
+    ]
+  },
+  "daily_observation": {
+    "pod": 30,
+    "timestamp": "2026-03-06T10:15:00",
+    "temperature": 37.1,
+    "heart_rate": 101,
+    "blood_pressure": "145/71",
+    "respiratory_rate": 21,
+    "spo2": 88,
+    "pain_score": 0,
+    "wbc": 10.7,
+    "hemoglobin": 12.3,
+    "wound_status": "Purulent discharge",
+    "drainage": "Seropurulent",
+    "clinical_notes": "Sudden dyspnea/chest pain; rule out pulmonary embolism. Concern for SSI; wound erythematous with drainage.",
+    "injected_events": [],
+    "rule_risk_score": 85,
+    "rule_risk_level": "CRITICAL"
+  },
+  "planned_events": [
+    [
+      "Pulmonary embolism",
+      10,
+      "CRIT"
+    ],
+    [
+      "Surgical site infection",
+      7,
+      "MED"
+    ]
+  ],
+  "ground_truth": {
+    "risk_level_rule": "CRITICAL",
+    "risk_score_rule": 85,
+    "schedule_type": "gapped_30",
+    "has_complication": true,
+    "complications_active": [
+      "Pulmonary embolism",
+      "Surgical site infection"
+    ],
+    "complications_started_today": []
+  }
+}

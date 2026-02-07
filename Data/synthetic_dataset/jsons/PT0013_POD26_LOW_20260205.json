@@ -1,0 +1,83 @@
+{
+  "patient_profile": {
+    "patient_id": "PT0013",
+    "name": "Anamika Bains",
+    "age": 41,
+    "sex": "F",
+    "comorbidities": [
+      "Coronary artery disease"
+    ],
+    "surgery": "Whipple Procedure (Pancreaticoduodenectomy)",
+    "surgery_complexity": "moderate",
+    "surgeon": "Dr. Toor",
+    "schedule_type": "dense_daily_30",
+    "pods": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30
+    ]
+  },
+  "daily_observation": {
+    "pod": 26,
+    "timestamp": "2026-03-03T07:00:00",
+    "temperature": 37.5,
+    "heart_rate": 77,
+    "blood_pressure": "107/88",
+    "respiratory_rate": 17,
+    "spo2": 96,
+    "pain_score": 0,
+    "wbc": 8.6,
+    "hemoglobin": 12.1,
+    "wound_status": "Clean, dry, intact",
+    "drainage": "None",
+    "clinical_notes": "Dysuria/urinary frequency; consider UTI.",
+    "injected_events": [],
+    "rule_risk_score": 0,
+    "rule_risk_level": "LOW"
+  },
+  "planned_events": [
+    [
+      "UTI",
+      3,
+      "LOW"
+    ]
+  ],
+  "ground_truth": {
+    "risk_level_rule": "LOW",
+    "risk_score_rule": 0,
+    "schedule_type": "dense_daily_30",
+    "has_complication": true,
+    "complications_active": [
+      "UTI"
+    ],
+    "complications_started_today": []
+  }
+}

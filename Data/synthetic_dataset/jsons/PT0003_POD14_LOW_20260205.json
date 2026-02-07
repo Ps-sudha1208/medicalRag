@@ -1,0 +1,52 @@
+{
+  "patient_profile": {
+    "patient_id": "PT0003",
+    "name": "Viraj Rau",
+    "age": 29,
+    "sex": "F",
+    "comorbidities": [
+      "None"
+    ],
+    "surgery": "Laparoscopic Cholecystectomy",
+    "surgery_complexity": "moderate",
+    "surgeon": "Dr. Sheth",
+    "schedule_type": "gapped_30",
+    "pods": [
+      0,
+      1,
+      3,
+      5,
+      7,
+      14,
+      21,
+      30
+    ]
+  },
+  "daily_observation": {
+    "pod": 14,
+    "timestamp": "2026-02-17T09:00:00",
+    "temperature": 36.8,
+    "heart_rate": 78,
+    "blood_pressure": "142/66",
+    "respiratory_rate": 16,
+    "spo2": 97,
+    "pain_score": 0,
+    "wbc": 5.6,
+    "hemoglobin": 10.7,
+    "wound_status": "Clean, dry, intact",
+    "drainage": "None",
+    "clinical_notes": "Recovering as expected. Pain controlled. No acute distress.",
+    "injected_events": [],
+    "rule_risk_score": 0,
+    "rule_risk_level": "LOW"
+  },
+  "planned_events": [],
+  "ground_truth": {
+    "risk_level_rule": "LOW",
+    "risk_score_rule": 0,
+    "schedule_type": "gapped_30",
+    "has_complication": false,
+    "complications_active": [],
+    "complications_started_today": []
+  }
+}

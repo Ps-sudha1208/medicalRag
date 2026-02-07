@@ -1,0 +1,64 @@
+{
+  "patient_profile": {
+    "patient_id": "PT0015",
+    "name": "Yamini Jayaraman",
+    "age": 71,
+    "sex": "M",
+    "comorbidities": [
+      "Coronary artery disease",
+      "Diabetes mellitus"
+    ],
+    "surgery": "Hernia Repair (Inguinal)",
+    "surgery_complexity": "low",
+    "surgeon": "Dr. Dayal",
+    "schedule_type": "gapped_30",
+    "pods": [
+      0,
+      1,
+      3,
+      5,
+      7,
+      14,
+      21,
+      30
+    ]
+  },
+  "daily_observation": {
+    "pod": 3,
+    "timestamp": "2026-02-05T10:45:00",
+    "temperature": 36.6,
+    "heart_rate": 94,
+    "blood_pressure": "128/93",
+    "respiratory_rate": 15,
+    "spo2": 98,
+    "pain_score": 9,
+    "wbc": 6.4,
+    "hemoglobin": 13.9,
+    "wound_status": "Clean, dry, intact",
+    "drainage": "None",
+    "clinical_notes": "Stable post-op course. Vitals within expected limits.",
+    "injected_events": [],
+    "rule_risk_score": 15,
+    "rule_risk_level": "LOW"
+  },
+  "planned_events": [
+    [
+      "Wound dehiscence",
+      15,
+      "HIGH"
+    ],
+    [
+      "Surgical site infection",
+      4,
+      "MED"
+    ]
+  ],
+  "ground_truth": {
+    "risk_level_rule": "LOW",
+    "risk_score_rule": 15,
+    "schedule_type": "gapped_30",
+    "has_complication": false,
+    "complications_active": [],
+    "complications_started_today": []
+  }
+}

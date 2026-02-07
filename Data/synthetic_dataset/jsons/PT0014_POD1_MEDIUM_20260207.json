@@ -1,0 +1,53 @@
+{
+  "patient_profile": {
+    "patient_id": "PT0014",
+    "name": "Brijesh Suri",
+    "age": 65,
+    "sex": "M",
+    "comorbidities": [
+      "CKD stage 3",
+      "Coronary artery disease"
+    ],
+    "surgery": "Whipple Procedure (Pancreaticoduodenectomy)",
+    "surgery_complexity": "moderate",
+    "surgeon": "Dr. Bhakta",
+    "schedule_type": "gapped_30",
+    "pods": [
+      0,
+      1,
+      3,
+      5,
+      7,
+      14,
+      21,
+      30
+    ]
+  },
+  "daily_observation": {
+    "pod": 1,
+    "timestamp": "2026-02-06T07:30:00",
+    "temperature": 37.3,
+    "heart_rate": 106,
+    "blood_pressure": "120/74",
+    "respiratory_rate": 17,
+    "spo2": 99,
+    "pain_score": 8,
+    "wbc": 9.4,
+    "hemoglobin": 12.4,
+    "wound_status": "Edges approximated with mild erythema",
+    "drainage": "Serous scant",
+    "clinical_notes": "Mild pain, improving mobility. No concerning symptoms.",
+    "injected_events": [],
+    "rule_risk_score": 30,
+    "rule_risk_level": "MEDIUM"
+  },
+  "planned_events": [],
+  "ground_truth": {
+    "risk_level_rule": "MEDIUM",
+    "risk_score_rule": 30,
+    "schedule_type": "gapped_30",
+    "has_complication": false,
+    "complications_active": [],
+    "complications_started_today": []
+  }
+}

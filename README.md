@@ -1,6 +1,6 @@
 # medicalRAG 
 
-A LangGraph-based multi-agent clinical risk assessment pipeline using RAG.
+A LangGraph-based multi-agent clinical risk(Post-op) assessment pipeline using RAG.
 
 ## Features
 - 6-agent LangGraph orchestration

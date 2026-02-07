@@ -1,0 +1,13 @@
+# Large / generated datasets
+Data/synthetic_dataset/
+Data/rag_artifacts/
+
+# Generated outputs
+results/
+*.joblib
+
+# Python junk
+__pycache__/
+*.pyc
+.venv/
+.env

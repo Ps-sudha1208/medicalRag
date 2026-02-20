@@ -1,0 +1,31 @@
+POST-OPERATIVE VITALS MONITORING PROTOCOL
+
+Monitoring Frequency:
+- POD 0-2: Every 2 hours
+- POD 3-5: Every 4 hours
+- POD 6+: Every 8 hours if stable
+
+Normal Ranges (Post-Operative Adult):
+- Temperature: 36.0 - 37.5°C
+- Heart Rate: 60 - 100 bpm
+- Blood Pressure Systolic: 90 - 160 mmHg
+- Blood Pressure Diastolic: 60 - 100 mmHg
+- Respiratory Rate: 12 - 20 breaths/min
+- SpO2: >= 95%
+- Pain Score: Target < 4
+
+Lab Alert Thresholds:
+- WBC > 12.0: Investigate for infection
+- WBC > 15.0: HIGH suspicion of systemic infection
+- Hemoglobin < 8.0: Transfusion threshold review
+- Hemoglobin < 7.0: Urgent transfusion consideration
+
+Escalation Protocol:
+- Any single CRITICAL vital: Notify senior immediately
+- Two or more HIGH vitals: Urgent medical review within 30 min
+- Trending deterioration over 2 readings: Escalate regardless of absolute values
+
+Pain Management:
+- Score 0-3: Continue current regimen
+- Score 4-6: Step up analgesia, reassess in 1 hour
+- Score 7-10: Urgent pain team review, consider IV opioids

@@ -1,0 +1,23 @@
+POST-OPERATIVE PULMONARY COMPLICATION GUIDELINES
+
+Common Complications:
+- Atelectasis: Most common, POD 1-2
+- Pneumonia: POD 3-5, fever + productive cough + infiltrate
+- Pulmonary Embolism (PE): Sudden SpO2 drop, tachycardia, pleuritic pain
+- Respiratory Failure: SpO2 < 90% on room air
+
+SpO2 Action Thresholds:
+- 95-100%: Normal, continue monitoring
+- 92-94%: Supplemental O2, investigate cause
+- 90-91%: HIGH alert — urgent respiratory review
+- < 90%: CRITICAL — immediate intervention, ICU consideration
+
+Respiratory Rate Alerts:
+- > 20 breaths/min: Early warning sign
+- > 25 breaths/min: HIGH — immediate assessment
+- > 30 breaths/min: CRITICAL — potential respiratory failure
+
+PE Risk Stratification (Post-Op):
+- High Risk: Immobility > 3 days, prior DVT/PE, malignancy
+- Prophylaxis: LMWH + compression stockings + early mobilization
+- Diagnostic: D-dimer, CT pulmonary angiogram if suspected

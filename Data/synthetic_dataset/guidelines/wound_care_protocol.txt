@@ -1,0 +1,33 @@
+POST-OPERATIVE WOUND CARE GUIDELINES
+
+Wound Assessment (Daily):
+- Inspect for erythema, edema, warmth, discharge
+- Dehiscence: separation of wound edges — escalate immediately
+- Surgical site infection (SSI): redness + purulent drainage + fever
+
+Risk Tiers:
+LOW:
+  - Clean wound, no signs of infection
+  - Pain Score 0-3, afebrile, normal WBC
+
+MEDIUM:
+  - Mild erythema, serous discharge
+  - Pain Score 4-6, low-grade fever (37.5-38.5°C)
+  - WBC 10-12 x10^9/L
+
+HIGH:
+  - Purulent discharge, significant erythema
+  - Pain Score 7-8, fever > 38.5°C
+  - WBC 12-15 x10^9/L
+
+CRITICAL:
+  - Wound dehiscence or evisceration
+  - Necrotizing fasciitis suspected
+  - Pain Score > 8, systemic sepsis signs
+  - WBC > 15 x10^9/L or < 4 x10^9/L
+  - SpO2 < 92%, HR > 120 bpm
+
+Interventions:
+- Wound swab for culture and sensitivity
+- Surgical review within 2 hours for HIGH/CRITICAL
+- Negative pressure wound therapy if indicated

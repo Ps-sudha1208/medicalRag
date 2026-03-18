@@ -2,6 +2,7 @@
 Data/synthetic_dataset/
 Data/rag_artifacts/
 results/
+MedRAG/
 
 # python
 __pycache__/
@@ -14,3 +15,5 @@ __pycache__/
 *.bin
 *.faiss
 *.pkl
+
+*.pdf

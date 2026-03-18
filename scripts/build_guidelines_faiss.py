@@ -36,7 +36,7 @@ def load_docs(guidelines_dir: Path):
     return docs
 
 def main():
-    guidelines_dir = Path("Data/synthetic_dataset/guidelines").resolve()
+    guidelines_dir = Path("../Data/synthetic_dataset/guidelines").resolve()
     out_dir = Path("Data/rag_artifacts/vectordb_guidelines_minilm_384").resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
 
